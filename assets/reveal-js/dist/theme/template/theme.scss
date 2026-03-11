@@ -329,3 +329,178 @@
         background-color: var(--r-background-color);
     }
 }
+
+/* Base callout styling */
+.reveal .callout {
+	margin: 0 auto;
+	// padding: 15px;
+	max-width: fit-content;
+	position: relative;
+	border-left: 10px solid #007bff;
+	border-radius: 10px;
+	background: #f8f9fa;
+	box-shadow: 7px 7px 5px rgba(red($mainColor),
+			green($mainColor),
+			blue($mainColor),
+			0.1);
+}
+
+.reveal .callout p {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	vertical-align: middle;
+}
+
+.reveal .callout-title {
+	font-weight: bold;
+	color: #333;
+	font-size: 1.1em;
+	justify-content: start !important;
+}
+
+.reveal .callout-title::before {
+	content: "";
+	margin-inline: 0;
+	background-size: contain;
+}
+
+/* Note styling */
+.reveal .callout.note {
+	border-left-color: $note;
+	background: #e1f5fe;
+}
+
+.reveal .callout.note .callout-title {
+	color: #0277bd;
+}
+
+/* Tip styling */
+.reveal .callout.tip {
+	border-left-color: $tip;
+	background: lighten($tip, 50%);
+}
+
+.reveal .callout.tip .callout-title {
+	color: $tip;
+}
+
+.reveal .callout.tip::before {
+	content: '';
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    display: inline-block;
+    transform: rotate(-30deg);
+	left: -110px;
+	top: -80px;
+    mask: url("../accent.svg") 100% 100% no-repeat;
+    mask-size: cover;
+    background: $tip;
+}
+
+/* Warning styling */
+.reveal .callout.warning {
+	border-left-color: $warning;
+	background: lighten($color: $warning, $amount: 45%);
+}
+
+.reveal .callout.warning .callout-title {
+	color: #f57c00;
+}
+
+/* Danger styling */
+.reveal .callout.danger {
+	border-left-color: $danger;
+	background: lighten($danger, 40%);
+}
+
+.reveal .callout.danger .callout-title {
+	color: darken($danger, 12%);
+}
+
+/* Success styling */
+.reveal .callout.success {
+	border-left-color: $success;
+	background: lighten($success, 55%);
+}
+
+.reveal .callout.success .callout-title {
+	color: darken($success, 12%);
+}
+
+/* Citation styling */
+.reveal .callout.cite {
+	border-left-color: transparent;
+	background: lighten($cite, 45%);
+}
+
+.reveal .callout.cite .callout-title {
+	color: darken($cite, 12%);
+	padding-left: .4em;
+}
+
+.reveal .callout.cite::before, .callout.cite::after {
+    position: absolute;
+	font-size: 6.5em;
+    display: inline-block;
+	color: $cite;
+	text-shadow: 5px 5px 0 lighten($color: $cite, $amount: 20%);
+}
+
+.reveal .callout.cite::before {
+	content: '\201C';
+	left: -60px;
+	top: -100px;
+}
+
+.reveal .callout.cite::after {
+	content: '\201D';
+	right: -50px;
+	bottom: -220px;
+}
+
+/* Interactive hover effects */
+.reveal .callout {
+	transition: all 0.3s ease;
+	cursor: default;
+}
+
+.reveal .callout:hover {
+	box-shadow: 0 4px 12px rgba(red($mainColor), green($mainColor), blue($mainColor), 0.15);
+	transform: translateY(-1px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.reveal .callout {
+		margin: 15px -10px;
+		padding: 12px;
+		border-radius: 0;
+	}
+}
+
+.reveal .callout.success .callout-title::before {
+	content: "✅";
+}
+
+.reveal .callout.note .callout-title::before {
+	content: "ℹ️";
+}
+
+.reveal .callout.tip .callout-title::before {
+	content: "💡";
+}
+
+.reveal .callout.warning .callout-title::before {
+	content: "⚠️";
+}
+
+.reveal .callout.danger .callout-title::before {
+	content: "🚨";
+}
+
+.reveal .callout.cite .callout-title::before {
+	content: "";
+}
