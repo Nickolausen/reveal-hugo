@@ -185,19 +185,23 @@
 .reveal code {
 	font-family: var(--r-code-font);
 	text-transform: none;
-	tab-size: 2;
+	tab-size: 4;
 }
 
 .reveal pre code {
 	display: block;
 	padding: 5px;
 	overflow: auto;
-	max-height: 400px;
 	word-wrap: normal;
 }
 
 .reveal .code-wrapper {
 	white-space: normal;
+}
+
+.reveal .custom-code-wrapper ~ .highlight  .code-wrapper {
+	white-space: normal;
+	height: clamp(300px, 100dvh, 1000px) !important; // TODO: Fix
 }
 
 .reveal .code-wrapper code {
@@ -331,18 +335,24 @@
 }
 
 /* Base callout styling */
-.reveal .callout {
+.reveal .callout, .reveal .callout-background {
 	margin: 0 auto;
-	// padding: 15px;
-	max-width: fit-content;
+	max-width: clamp(500px, 50dvw, 100%) !important;
+	min-height: fit-content;
 	position: relative;
-	border-left: 10px solid #007bff;
 	border-radius: 10px;
-	background: #f8f9fa;
+}
+
+.reveal .callout {
 	box-shadow: 7px 7px 5px rgba(red($mainColor),
 			green($mainColor),
 			blue($mainColor),
 			0.1);
+	background-color: $backgroundColor;
+}
+
+.reveal .callout-background {
+	border-left: 10px solid $note;
 }
 
 .reveal .callout p {
@@ -357,7 +367,7 @@
 	font-weight: bold;
 	color: #333;
 	font-size: 1.1em;
-	justify-content: start !important;
+	// justify-content: start !important;
 }
 
 .reveal .callout-title::before {
@@ -367,23 +377,58 @@
 }
 
 /* Note styling */
-.reveal .callout.note {
+.reveal .callout.note .callout-background {
 	border-left-color: $note;
-	background: #e1f5fe;
+	background: rgba($note, .2);
 }
 
 .reveal .callout.note .callout-title {
-	color: #0277bd;
+	color: $note;
 }
 
 /* Tip styling */
-.reveal .callout.tip {
+.reveal .callout.tip .callout-background {
 	border-left-color: $tip;
-	background: lighten($tip, 50%);
+	background: rgba($tip, .3);
 }
 
 .reveal .callout.tip .callout-title {
 	color: $tip;
+}
+
+.reveal [class*="accentify"]::before {
+	content: '';
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    display: inline-block;
+    mask: url("../accent.svg") 100% 100% no-repeat;
+    mask-size: cover;
+	background-color: $accentClr;
+}
+
+.reveal .accentify-top-left::before {
+	transform: rotate(-30deg);
+	left: -110px;
+	top: -80px;
+}
+
+.reveal .accentify-top-right::before {
+	transform: rotate(30deg) scaleX(-1);
+	right: -110px;
+	top: -80px;
+}
+
+.reveal .accentify-bottom-left::before {
+	transform: scaleY(-1) rotate(-25deg);
+	left: -100px;
+	bottom: -80px;
+}
+
+.reveal .accentify-bottom-right::before {
+	transform: scaleY(-1) scaleX(-1) rotate(-25deg);
+	right: -100px;
+	bottom: -80px;
 }
 
 .reveal .callout.tip::before {
@@ -397,23 +442,23 @@
 	top: -80px;
     mask: url("../accent.svg") 100% 100% no-repeat;
     mask-size: cover;
-    background: $tip;
+	background: $tip;
 }
 
 /* Warning styling */
-.reveal .callout.warning {
+.reveal .callout.warning .callout-background {
 	border-left-color: $warning;
-	background: lighten($color: $warning, $amount: 45%);
+	background: rgba($color: $warning, $alpha: .17);
 }
 
 .reveal .callout.warning .callout-title {
-	color: #f57c00;
+	color: darken($warning, 15%);
 }
 
 /* Danger styling */
-.reveal .callout.danger {
+.reveal .callout.danger .callout-background {
 	border-left-color: $danger;
-	background: lighten($danger, 40%);
+	background: rgba($danger, .3);
 }
 
 .reveal .callout.danger .callout-title {
@@ -421,9 +466,9 @@
 }
 
 /* Success styling */
-.reveal .callout.success {
+.reveal .callout.success .callout-background {
 	border-left-color: $success;
-	background: lighten($success, 55%);
+	background: rgba($success, .3);
 }
 
 .reveal .callout.success .callout-title {
@@ -431,14 +476,13 @@
 }
 
 /* Citation styling */
-.reveal .callout.cite {
+.reveal .callout.cite .callout-background {
 	border-left-color: transparent;
-	background: lighten($cite, 45%);
+	background: rgba($cite, .1);
 }
 
 .reveal .callout.cite .callout-title {
 	color: darken($cite, 12%);
-	padding-left: .4em;
 }
 
 .reveal .callout.cite::before, .callout.cite::after {
@@ -447,6 +491,7 @@
     display: inline-block;
 	color: $cite;
 	text-shadow: 5px 5px 0 lighten($color: $cite, $amount: 20%);
+	z-index: 10;
 }
 
 .reveal .callout.cite::before {
@@ -464,7 +509,6 @@
 /* Interactive hover effects */
 .reveal .callout {
 	transition: all 0.3s ease;
-	cursor: default;
 }
 
 .reveal .callout:hover {
@@ -482,23 +526,23 @@
 }
 
 .reveal .callout.success .callout-title::before {
-	content: "✅";
+	content: "✅ ";
 }
 
 .reveal .callout.note .callout-title::before {
-	content: "ℹ️";
+	content: "ℹ️ ";
 }
 
 .reveal .callout.tip .callout-title::before {
-	content: "💡";
+	content: "💡 ";
 }
 
 .reveal .callout.warning .callout-title::before {
-	content: "⚠️";
+	content: "⚠️ ";
 }
 
 .reveal .callout.danger .callout-title::before {
-	content: "🚨";
+	content: "🚨 ";
 }
 
 .reveal .callout.cite .callout-title::before {
