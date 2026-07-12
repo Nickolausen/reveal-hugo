@@ -57,19 +57,14 @@
       manage hot-reload by using the reveal ready event.
 */}}
 {{ $hasMermaid := false }}
-{{ $hasMath := false }}
 {{ range .Site.AllPages }}
   {{ if .Store.Get "hasMermaid" }}
     {{ $hasMermaid = true }}
   {{ end }}
-  {{ if or .Params.math (.Store.Get "hasMath")  }}
-    {{ $hasMath = true }}
-  {{ end }}
 {{ end }}
 
 {{ if $hasMermaid }}
-  {{ $mermaidSrc := resources.GetRemote "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" }}
-  <script type="text/javascript" src="{{ $mermaidSrc.RelPermalink }}"></script>
+  <script type="text/javascript" src="/extlib/js/mermaid.min.js"></script>
   <script type="text/javascript">
     mermaid.initialize({startOnLoad: false});
     let render = (event) => {
@@ -92,24 +87,3 @@
     Reveal.on('ready', render);
   </script>
 {{ end }}
-
-{{ if $hasMath }}
-<script>
-  MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']]
-    },
-    svg: {
-      fontCache: 'global'
-    }
-  };
-</script>
-  
-{{ $mathjaxSrc := resources.GetRemote "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" }}
-<script type="text/javascript" id="MathJax-script" async src="{{ $mathjaxSrc.RelPermalink }}"></script>
-{{ end }}
-
-{{- $custom_js := $.Param "reveal_hugo.custom_js" -}}
-{{- if $custom_js -}}
-<script type="text/javascript" src="{{ $custom_js | relURL }}"></script>
-{{- end -}}
