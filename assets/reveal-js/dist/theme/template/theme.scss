@@ -477,8 +477,8 @@
 
 /* Citation styling */
 .reveal .callout.cite .callout-background {
-	border-left-color: transparent;
 	background: rgba($cite, .1);
+	border: 2px solid $cite;
 }
 
 .reveal .callout.cite .callout-title {
